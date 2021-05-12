@@ -5,8 +5,7 @@ using UnityEngine;
 public class BulletForce : MonoBehaviour
 {
     [SerializeField] float expForce;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask collisionLayer;
     [SerializeField] GameObject damageNumPF;
     Material mat;
     float timeElapsed = 0f;
@@ -14,8 +13,7 @@ public class BulletForce : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Collider[] blastzone = Physics.OverlapSphere(transform.position, 0.05f, groundLayer);
-        Collider[] blowback = Physics.OverlapSphere(transform.position, 0.05f, playerLayer);
+        Collider[] blastzone = Physics.OverlapSphere(transform.position, 0.05f, collisionLayer);
         mat = GetComponent<Renderer>().material;
 
         foreach (Collider blast in blastzone)
@@ -29,15 +27,12 @@ public class BulletForce : MonoBehaviour
 
                 if (numInst)
                     numInst.GetComponent<BoxDamageText>().dmgUpdate((int)(1 / (Camera.main.transform.position - blastRB.transform.position).magnitude * 50));
+
+                if (blastRB.GetComponent<EnemyMovement>())
+                {
+                    blastRB.GetComponent<EnemyMovement>().takeDamage((int)(1 / (Camera.main.transform.position - blastRB.transform.position).magnitude * 50));
+                }
             }
-        }
-
-        foreach (Collider plr in blowback)
-        {
-            Rigidbody blowbackRB = plr.GetComponent<Rigidbody>();
-
-            if (blowbackRB)
-                blowbackRB.AddExplosionForce(expForce, transform.position, 0.6f, 0.1f, ForceMode.Impulse);
         }
     }
 

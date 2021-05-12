@@ -5,8 +5,7 @@ using UnityEngine;
 public class Ekkusupuroshion : MonoBehaviour
 {
     [SerializeField] float expForce;
-    [SerializeField] LayerMask groundLayer;
-    [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask collisionLayer;
     [SerializeField] GameObject damageNumPF;
     Material mat;
     float timeElapsed = 0f;
@@ -14,8 +13,7 @@ public class Ekkusupuroshion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Collider[] blastzone = Physics.OverlapSphere(transform.position, 0.8f, groundLayer);
-        Collider[] blowback = Physics.OverlapSphere(transform.position, 0.8f, playerLayer);
+        Collider[] blastzone = Physics.OverlapSphere(transform.position, 0.8f, collisionLayer);
         mat = GetComponent<Renderer>().material;
 
         foreach (Collider blast in blastzone)
@@ -24,20 +22,18 @@ public class Ekkusupuroshion : MonoBehaviour
 
             if (blastRB)
             {
-                blastRB.AddExplosionForce(expForce, transform.position, 0.8f, 0f, ForceMode.Impulse);
                 GameObject numInst = Instantiate(damageNumPF, blastRB.transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
 
                 if (numInst)
-                    numInst.GetComponent<BoxDamageText>().dmgUpdate((int) ((1.6f - (transform.position - blastRB.transform.position).magnitude) * 96f));
+                    numInst.GetComponent<BoxDamageText>().dmgUpdate((int)((1.6f - (transform.position - blastRB.transform.position).magnitude) * 96f));
+
+                if (blastRB.GetComponent<EnemyMovement>())
+                {
+                    blastRB.GetComponent<EnemyMovement>().takeDamage((int)((1.6f - (transform.position - blastRB.transform.position).magnitude) * 96f));
+                }
+
+                blastRB.AddExplosionForce(expForce, transform.position, 0.8f, 0f, ForceMode.Impulse);
             }
-        }
-
-        foreach (Collider plr in blowback)
-        {
-            Rigidbody blowbackRB = plr.GetComponent<Rigidbody>();
-
-            if (blowbackRB)
-                blowbackRB.AddExplosionForce(expForce, transform.position, 0.8f, 0f, ForceMode.Impulse);
         }
     }
 

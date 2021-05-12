@@ -8,11 +8,11 @@ public class RocketScience : MonoBehaviour
     float airtime = 0.0f;
     [SerializeField] float speed;
     [SerializeField] GameObject explosionPF;
-    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask collisionLayer;
 
     bool shouldExplode()
     {
-        Collider[] colliders = Physics.OverlapSphere(rb.position, 0.2f, groundLayer);
+        Collider[] colliders = Physics.OverlapSphere(rb.position, 0.2f, collisionLayer);
 
         if (colliders.Length > 0 || airtime > 5.0f)
         {

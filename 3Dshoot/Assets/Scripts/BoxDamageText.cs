@@ -14,6 +14,7 @@ public class BoxDamageText : MonoBehaviour
     public void dmgUpdate(int dmg)
     {
         damageTaken = dmg;
+        tColor.a = 1.0f;
     }
 
     // Start is called before the first frame update
@@ -32,11 +33,17 @@ public class BoxDamageText : MonoBehaviour
         transform.position += new Vector3(0f, Time.deltaTime, 0f);
         vanishTime += 0.01f * Time.deltaTime;
         tColor.a -= vanishTime;
-        tMesh.color = tColor;
+
+        if (damageTaken == 0)
+        {
+            tColor.a = 0f;
+        }
 
         if (vanishTime > 1f)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+
+        tMesh.color = tColor;
     }
 }

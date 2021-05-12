@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
+    [SerializeField] float playerJumpForce;
+    [SerializeField] float playerSpeed;
+    [SerializeField] int playerHeldWeapon;
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] float speed;
-    [SerializeField] float accel;
-    [SerializeField] float jumpForce;
-    Vector3 totalForce = Vector3.zero;
+    Vector3 totalForce;
     bool spaceKey = false;
 
     bool grounded()
@@ -34,25 +34,28 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 horiInput = Input.GetAxis("Horizontal") * transform.right;
-        Vector3 vertInput = Input.GetAxis("Vertical") * transform.forward;
+        Vector3 horiInput = Input.GetAxisRaw("Horizontal") * transform.right;
+        Vector3 vertInput = Input.GetAxisRaw("Vertical") * transform.forward;
         spaceKey = Input.GetKeyDown(KeyCode.Space);
         totalForce = (horiInput + vertInput).normalized;
+    }
 
+    void FixedUpdate()
+    {
         //Jumping
         if (spaceKey && grounded())
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, playerJumpForce, rb.velocity.z);
         }
 
         //Walking
         if (grounded())
         {
             if (totalForce != Vector3.zero)
-                rb.velocity = totalForce * speed + rb.velocity.y * Vector3.up;
+                rb.velocity = totalForce * playerSpeed + rb.velocity.y * Vector3.up;
 
             else
-                rb.velocity = rb.velocity - (rb.velocity - rb.velocity.y * Vector3.up) * Time.deltaTime * 50.0f;
+                rb.velocity = rb.velocity.y * Vector3.up;
         }
 
         //Midair Strafing + Air Resistance
@@ -60,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (totalForce != Vector3.zero && !grounded() && Vector3.Dot((rb.velocity - rb.velocity.y * Vector3.up), totalForce) <= 1f)
             {
-                rb.velocity = rb.velocity + totalForce * speed * 0.05f;
+                rb.velocity = rb.velocity + totalForce * playerSpeed * 0.15f;
             }
 
             rb.velocity = rb.velocity - (rb.velocity - rb.velocity.y * Vector3.up) * Time.deltaTime * 0.01f;

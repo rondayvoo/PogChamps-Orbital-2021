@@ -96,10 +96,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  explosionPF: {fileID: 3285317856543735164, guid: 661c722987f72c84f899dd1a3ae6b2bb, type: 3}
-  groundLayer:
+  explosionPF: {fileID: 3285317856543735164, guid: 661c722987f72c84f899dd1a3ae6b2bb,
+    type: 3}
+  collisionLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 640
 --- !u!54 &-2474610390340513000
 Rigidbody:
   m_ObjectHideFlags: 0

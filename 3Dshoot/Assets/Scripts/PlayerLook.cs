@@ -5,15 +5,14 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
     [SerializeField] Transform cam;
-    [SerializeField] Transform firepoint;
+    //[SerializeField] Transform firepoint;
     [SerializeField] float sensitivity;
     float headRotation = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     // Update is called once per frame
@@ -25,7 +24,7 @@ public class PlayerLook : MonoBehaviour
         headRotation += yRotate;
         headRotation = Mathf.Clamp(headRotation, -90.0f, 90.0f);
         cam.localRotation = Quaternion.Euler(headRotation, 0f, 0f);
-        firepoint.localRotation = Quaternion.Euler(headRotation, 0f, 0f);
+        //firepoint.localRotation = Quaternion.Euler(headRotation, 0f, 0f);
         transform.Rotate(Vector3.up * xRotate);
         //cam.localEulerAngles = new Vector3(headRotation, 0f, 0f);
     }
