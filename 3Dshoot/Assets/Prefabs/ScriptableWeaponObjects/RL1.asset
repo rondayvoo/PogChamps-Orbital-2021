@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e725209a74afaea42a27c2e7ba5d8038, type: 3}
   m_Name: RL1
   m_EditorClassIdentifier: 
-  weaponName: Deagle
+  itemName: 
+  itemDesc: 
   weaponLevel: 1
-  weaponDescription: Big rocket!
   fireDelay: 0.6
   reloadTime: 0
   element: 0
@@ -23,3 +23,5 @@ MonoBehaviour:
     m_Bits: 896
   rocketPF: {fileID: 8293944345359574532, guid: 4a95a1bc5e7f7cf45978f81a09691449,
     type: 3}
+  baseProj: {fileID: 11400000, guid: 2cfba80a7dcdac04991f533df0bf5e32, type: 2}
+  baseExp: {fileID: 11400000, guid: 757923f92c27ed34ea449ec9323ef409, type: 2}

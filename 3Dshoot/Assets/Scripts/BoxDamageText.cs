@@ -39,9 +39,9 @@ public class BoxDamageText : MonoBehaviour
             tColor.a = 0f;
         }
 
-        if (vanishTime > 1f)
+        if (vanishTime >= 0.01f)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
 
         tMesh.color = tColor;

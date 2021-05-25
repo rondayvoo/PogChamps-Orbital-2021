@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6020347928617445147}
   - component: {fileID: 7483410219611722523}
   - component: {fileID: 8575778700177935399}
-  - component: {fileID: 716011890700320718}
+  - component: {fileID: 1298035556318749200}
   m_Layer: 0
   m_Name: BulletImp
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3285317856543735164}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.5408993, y: 1.79, z: 5.6927347}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,7 +99,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &716011890700320718
+--- !u!114 &1298035556318749200
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -108,12 +108,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3285317856543735164}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecfbd0707606d2a4eacfa7e38fe08a0b, type: 3}
+  m_Script: {fileID: 11500000, guid: d6a86afbbfc0fbf4f9e4bf0872ec1f8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expForce: 2
-  collisionLayer:
-    serializedVersion: 2
-    m_Bits: 896
+  baseExp: {fileID: 0}
   damageNumPF: {fileID: 3696978994510814290, guid: 635376bcea444aa4f9ca09830bbeb61f,
     type: 3}

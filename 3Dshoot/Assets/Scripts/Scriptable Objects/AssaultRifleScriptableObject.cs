@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon Profile", menuName = "Weapon/Assault Rifle")]
+[CreateAssetMenu(fileName = "New Weapon Profile", menuName = "Item/Weapon/Assault Rifle")]
 public class AssaultRifleScriptableObject : WeaponScriptableObject
 {
     public GameObject bulletImpPF;
+    public ExplosionScriptableObject baseExp;
     public float bulletSpread;
     public float range;
 
@@ -19,18 +20,8 @@ public class AssaultRifleScriptableObject : WeaponScriptableObject
 
         if (Physics.Raycast(cam.position, cam.forward + bSpread, out impact, range, collisionLayer))
         {
-            Instantiate(bulletImpPF, impact.point, Quaternion.LookRotation(impact.normal));
+            GameObject exp = Instantiate(bulletImpPF, impact.point, Quaternion.LookRotation(impact.normal));
+            exp.GetComponent<Ekkusupuroshion>().baseExp = baseExp;
         }
     }
 }
-
-//[System.Serializable]
-//public class Weapon<AssaultRifle> : Weapon
-//{
-//    public WeaponScriptableObject<AssaultRifle> AR;
-//
-//    public Weapon (WeaponScriptableObject<AssaultRifle> blueprint)
-//    {
-//        AR = blueprint;
-//    }
-//}

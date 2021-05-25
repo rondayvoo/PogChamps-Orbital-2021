@@ -10,17 +10,22 @@ public enum wElement
     acid
 }
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon")]
-public abstract class WeaponScriptableObject : ScriptableObject
+public abstract class WeaponScriptableObject : ItemScriptableObject
 {
-    public string weaponName;
     public int weaponLevel;
-    public string weaponDescription;
     public float fireDelay;
     public float reloadTime;
+    public int clipSize;
+    public int ammoCap;
     public wElement element;
-    //public Transform firepoint;
     public LayerMask collisionLayer;
+    public bool drawBulletTrail;
+    public ParticleSystem bulletTrail;
 
     public abstract void primaryFire(Transform cam);
+
+    public void drawTrail(Transform firepoint, Transform hit)
+    {
+        Instantiate(bulletTrail, firepoint.position, firepoint.rotation);
+    }
 }

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Ekkusupuroshion : MonoBehaviour
 {
-    [SerializeField] float expForce;
-    [SerializeField] LayerMask collisionLayer;
+    [HideInInspector] public ExplosionScriptableObject baseExp;
     [SerializeField] GameObject damageNumPF;
     Material mat;
     float timeElapsed = 0f;
@@ -13,7 +12,7 @@ public class Ekkusupuroshion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Collider[] blastzone = Physics.OverlapSphere(transform.position, 0.8f, collisionLayer);
+        Collider[] blastzone = Physics.OverlapSphere(transform.position, baseExp.expRadius, baseExp.expCollision);
         mat = GetComponent<Renderer>().material;
 
         foreach (Collider blast in blastzone)
@@ -22,17 +21,23 @@ public class Ekkusupuroshion : MonoBehaviour
 
             if (blastRB)
             {
+                int dmgTaken = (int) (baseExp.dmgMultiplier + Random.Range(-baseExp.dmgScalar, baseExp.dmgScalar));
                 GameObject numInst = Instantiate(damageNumPF, blastRB.transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
 
                 if (numInst)
-                    numInst.GetComponent<BoxDamageText>().dmgUpdate((int)((1.6f - (transform.position - blastRB.transform.position).magnitude) * 96f));
+                    numInst.GetComponent<BoxDamageText>().dmgUpdate(dmgTaken);
 
                 if (blastRB.GetComponent<EnemyMovement>())
                 {
-                    blastRB.GetComponent<EnemyMovement>().takeDamage((int)((1.6f - (transform.position - blastRB.transform.position).magnitude) * 96f));
+                    blastRB.GetComponent<EnemyMovement>().takeDamage(dmgTaken);
                 }
 
-                blastRB.AddExplosionForce(expForce, transform.position, 0.8f, 0f, ForceMode.Impulse);
+                if (blastRB.GetComponent<PlayerMovement>())
+                {
+                    blastRB.GetComponent<PlayerMovement>().takeDamage(dmgTaken);
+                }
+
+                blastRB.AddExplosionForce(baseExp.expForce, transform.position, baseExp.expRadius, 0f, ForceMode.Impulse);
             }
         }
     }

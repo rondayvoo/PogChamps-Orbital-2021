@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3ae4a16f87164418597bb1c131861a, type: 3}
   m_Name: InitPlayer
   m_EditorClassIdentifier: 
-  charName: Player
-  charDesc: Hi! It's me!
-  charHealth: 800
-  charSpeed: 5
-  playerJumpForce: 6
-  playerHeldWeapon: 1
-  playerInventory: []
-  maxInventorySize: 3
+  itemName: 
+  itemDesc: 
+  charHealth: 1000
+  charSpeed: 9
+  playerJumpForce: 4
+  playerMaxAccel: 80
+  playerHeldWeapon: 0
+  playerDmgMultiplier: 0
+  playerFireRateMultiplier: 0
+  playerShotSpeedMultiplier: 0
+  playerInventory: {fileID: 11400000, guid: 87f0524adda4a9e4193c22c8c9585682, type: 2}

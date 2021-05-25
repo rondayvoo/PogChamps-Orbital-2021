@@ -7,8 +7,7 @@ public class EnemyMovement : MonoBehaviour
 {
     Rigidbody rb;
     public EnemyScriptableObject enemyProfile;
-    [HideInInspector] public EnemyScriptableObject enemyInst;
-    int enemyCurrHealth;
+    private int enemyCurrHealth;
     [SerializeField] HealthBarScript healthbar;
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask groundLayer;
@@ -65,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
         {
             agent.enabled = false;
             rb.isKinematic = false;
-            rb.velocity = (rb.velocity - rb.velocity.y * Vector3.up) * 0.97f + rb.velocity.y * Vector3.up;
+            //rb.velocity = (rb.velocity - rb.velocity.y * Vector3.up) * 0.97f + rb.velocity.y * Vector3.up;
             stunTimer -= Time.deltaTime;
         }
 

@@ -6,8 +6,9 @@ public class WeaponManager : MonoBehaviour
 {
     [SerializeField] int playerHeldWeapon;
     [SerializeField] int maxInventorySize;
-    List<WeaponScriptableObject> playerInventory = new List<WeaponScriptableObject>();
+    public PlayerInventoryScriptableObject playerInventory;
     int qWeapon = 0;
+    float currFireDelay;
     public float reachDist;
     public LayerMask gunLayer;
 
@@ -31,9 +32,9 @@ public class WeaponManager : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out facing, reachDist, gunLayer))
         {
-            if (playerInventory.Count >= maxInventorySize)
+            if (playerInventory.inventoryWeaponList.Count >= maxInventorySize)
             {
-                playerInventory[playerHeldWeapon] = facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst;
+                playerInventory.inventoryWeaponList[playerHeldWeapon] = facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst;
                 wDrop();
                 facing.transform.SetParent(transform);
                 facing.transform.SetSiblingIndex(playerHeldWeapon);
@@ -45,7 +46,7 @@ public class WeaponManager : MonoBehaviour
             
             else
             {
-                playerInventory.Add(facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst);
+                playerInventory.inventoryWeaponList.Add(facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst);
 
                 facing.transform.SetParent(transform);
                 facing.rigidbody.detectCollisions = false;
@@ -74,7 +75,7 @@ public class WeaponManager : MonoBehaviour
 
         foreach (Transform weapon in transform)
         {
-            if (playerInventory.Count > 0 && iter == playerHeldWeapon)
+            if (playerInventory.inventoryWeaponList.Count > 0 && iter == playerHeldWeapon)
             {
                 weapon.GetComponent<Rigidbody>().position = weapon.GetComponent<Rigidbody>().position + weapon.GetComponent<Rigidbody>().transform.right * 10f;
                 weapon.parent = null;
@@ -88,47 +89,56 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-    void primaryFireFunction()
+    void wSway()
     {
-        if (playerInventory.Count > 0)
+        float xRotate = Input.GetAxis("Mouse X");
+        float yRotate = Input.GetAxis("Mouse Y");
+        float sensitivity = 5f;
+        Quaternion xAdjust = Quaternion.AngleAxis(sensitivity * xRotate, -Vector3.up);
+        Quaternion yAdjust = Quaternion.AngleAxis(sensitivity * yRotate, Vector3.right);
+        Quaternion targetRotate = transform.localRotation * xAdjust * yAdjust;
+
+        foreach (Transform weapon in transform)
         {
-            if (Input.GetButtonDown("Fire1"))
-            {
-                Shoot();
-                CancelInvoke("Shoot");
-            }
-
-            if (Input.GetButton("Fire1") && !IsInvoking("Shoot"))
-            {
-                Invoke("Shoot", playerInventory[playerHeldWeapon].fireDelay);
-            }
-
-            if (Input.GetButtonUp("Fire1"))
-            {
-                CancelInvoke("Shoot");
-            }
+            weapon.localRotation = Quaternion.Lerp(weapon.localRotation, targetRotate, Time.deltaTime);
         }
     }
 
-    void Shoot()
+    void primaryFireFunction()
     {
-        Transform cam = Camera.main.transform;
-        playerInventory[playerHeldWeapon].primaryFire(cam);
-        playerInventory[playerHeldWeapon].fireDelay -= 0.01f;
+        if (playerInventory.inventoryWeaponList.Count > 0)
+        {
+            if (Input.GetButton("Fire1") && currFireDelay <= 0f)
+            {
+                Transform cam = Camera.main.transform;
+                RaycastHit ray;
+
+                Physics.Raycast(cam.position, cam.forward, out ray);
+
+                if (playerInventory.inventoryWeaponList[playerHeldWeapon].drawBulletTrail)
+                    playerInventory.inventoryWeaponList[playerHeldWeapon].drawTrail(transform.GetChild(playerHeldWeapon).GetComponent<WeaponObject>().firepoint, ray.transform);
+
+                playerInventory.inventoryWeaponList[playerHeldWeapon].primaryFire(cam);
+                currFireDelay += playerInventory.inventoryWeaponList[playerHeldWeapon].fireDelay;
+            }
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        wSelect();
+        //Remove this when trying to implement saving
+        playerInventory.inventoryWeaponList = new List<WeaponScriptableObject>();
 
         foreach (Transform weaponT in transform)
         {
-            playerInventory.Add(weaponT.GetComponent<WeaponObject>().weaponInst);
+            playerInventory.inventoryWeaponList.Add(weaponT.GetComponent<WeaponObject>().weaponInst);
             weaponT.GetComponent<Rigidbody>().isKinematic = true;
             weaponT.GetComponent<Rigidbody>().detectCollisions = false;
             weaponT.transform.parent = transform;
         }
+
+        wSelect();
     }
 
     // Update is called once per frame
@@ -136,7 +146,9 @@ public class WeaponManager : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            if (playerHeldWeapon >= playerInventory.Count - 1)
+            qWeapon = playerHeldWeapon;
+
+            if (playerHeldWeapon >= playerInventory.inventoryWeaponList.Count - 1)
                 playerHeldWeapon = 0;
             else
                 playerHeldWeapon++;
@@ -144,30 +156,37 @@ public class WeaponManager : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f)
         {
+            qWeapon = playerHeldWeapon;
+
             if (playerHeldWeapon <= 0)
-                playerHeldWeapon = playerInventory.Count - 1;
+                playerHeldWeapon = playerInventory.inventoryWeaponList.Count - 1;
             else
                 playerHeldWeapon--;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && playerInventory.inventoryWeaponList.Count >= 1)
         {
+            qWeapon = playerHeldWeapon;
             playerHeldWeapon = 0;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && playerInventory.inventoryWeaponList.Count >= 2)
         {
+            qWeapon = playerHeldWeapon;
             playerHeldWeapon = 1;
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && playerInventory.inventoryWeaponList.Count >= 3)
         {
+            qWeapon = playerHeldWeapon;
             playerHeldWeapon = 2;
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            int temp = playerHeldWeapon;
             playerHeldWeapon = qWeapon;
+            qWeapon = temp;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -175,9 +194,10 @@ public class WeaponManager : MonoBehaviour
             wSwap();
         }
 
-        qWeapon = playerHeldWeapon;
         wSelect();
+        wSway();
         
         primaryFireFunction();
+        currFireDelay = currFireDelay <= 0f ? 0f : currFireDelay - Time.deltaTime;
     }
 }

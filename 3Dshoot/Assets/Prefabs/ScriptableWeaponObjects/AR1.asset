@@ -12,16 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5ec25e5df19cd4baf82e7e3475fba4, type: 3}
   m_Name: AR1
   m_EditorClassIdentifier: 
-  weaponName: M4A1
+  itemName: 
+  itemDesc: 
   weaponLevel: 1
-  weaponDescription: This gun fires fast!
   fireDelay: 0.1
   reloadTime: 0
+  clipSize: 0
+  ammoCap: 0
   element: 0
   collisionLayer:
     serializedVersion: 2
     m_Bits: 896
+  drawBulletTrail: 1
+  bulletTrail: {fileID: 6515719120629407520, guid: 2fe1ac27d2416f449bb8673d3edd0316,
+    type: 3}
   bulletImpPF: {fileID: 3285317856543735164, guid: c4f084ec47565224fb3c1ece8a932399,
     type: 3}
+  baseExp: {fileID: 11400000, guid: b92e75a4d8d47e444bb13269e5c1e97b, type: 2}
   bulletSpread: 0.02
   range: 500

@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Character Profile", menuName = "Character/Enemy")]
+[CreateAssetMenu(fileName = "New Enemy Profile", menuName = "Item/Character/Enemy")]
 public class EnemyScriptableObject : CharacterScriptableObject
 {
     public WeaponScriptableObject heldWeapon;
     public float stunTime;
 
-    private float currStunTime;
-
-    public override void takeDamage(int damage)
+    public override void takeDamage(int currentHealth, int damage)
     {
-        charHealth -= damage;
+        currentHealth -= damage;
         //healthbar.healthUpdate(health);
         //stunTimer = 1f;
         //agent.enabled = false;

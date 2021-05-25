@@ -2,14 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon/Rocket Launcher")]
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Item/Weapon/Rocket Launcher")]
 public class RocketLauncherScriptableObject : WeaponScriptableObject
 {
     public GameObject rocketPF;
+    public ProjectileScriptableObject baseProj;
+    public ExplosionScriptableObject baseExp;
 
     public override void primaryFire(Transform cam)
     {
-        Instantiate(rocketPF, cam.position, cam.rotation);
+        GameObject proj = Instantiate(rocketPF, cam.position, cam.rotation);
+        proj.GetComponent<RocketScience>().baseProj = baseProj;
+        proj.GetComponent<RocketScience>().baseExp = baseExp;
     }
 }
 

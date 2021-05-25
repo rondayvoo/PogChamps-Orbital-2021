@@ -2,29 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Character Profile", menuName = "Character/Player")]
+[CreateAssetMenu(fileName = "New Character Profile", menuName = "Item/Character/Player")]
 public class PlayerScriptableObject : CharacterScriptableObject
 {
     public float playerJumpForce;
+    public float playerMaxAccel;
     public int playerHeldWeapon;
-    public List<WeaponScriptableObject> playerInventory;
-    public int maxInventorySize;
+    public float playerDmgMultiplier;
+    public float playerFireRateMultiplier;
+    public float playerShotSpeedMultiplier;
+    public PlayerInventoryScriptableObject playerInventory;
 
-    public override void takeDamage(int damage)
+    public override void takeDamage(int currentHealth, int damage)
     {
         
     }
-
-    //public override Character<PlayerScriptableObject> createCharacter()
-    //{
-    //    Character<PlayerScriptableObject> newChar = new Character<PlayerScriptableObject>(this);
-    //    return newChar;
-    //}
-    //
-    //public override CharacterScriptableObject Clone()
-    //{
-    //    return new PlayerScriptableObject(this);
-    //}
 }
 
 //[System.Serializable]

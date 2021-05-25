@@ -6,15 +6,15 @@ public class RocketScience : MonoBehaviour
 {
     Rigidbody rb;
     float airtime = 0.0f;
-    [SerializeField] float speed;
+    [HideInInspector] public ProjectileScriptableObject baseProj;
+    [HideInInspector] public ExplosionScriptableObject baseExp;
     [SerializeField] GameObject explosionPF;
-    [SerializeField] LayerMask collisionLayer;
 
     bool shouldExplode()
     {
-        Collider[] colliders = Physics.OverlapSphere(rb.position, 0.2f, collisionLayer);
+        Collider[] colliders = Physics.OverlapSphere(rb.position, 0.2f, baseProj.projCollision);
 
-        if (colliders.Length > 0 || airtime > 5.0f)
+        if (colliders.Length > 0 || airtime > baseProj.projMaxAirtime)
         {
             return true;
         }
@@ -26,7 +26,7 @@ public class RocketScience : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed;
+        rb.velocity = transform.forward * baseProj.projSpeed;
     }
 
     // Update is called once per frame
@@ -34,7 +34,8 @@ public class RocketScience : MonoBehaviour
     {
         if (shouldExplode())
         {
-            Instantiate(explosionPF, rb.position, rb.rotation);
+            GameObject exp = Instantiate(explosionPF, rb.position, rb.rotation);
+            exp.GetComponent<Ekkusupuroshion>().baseExp = baseExp;
             Destroy(this.gameObject);
         }
 

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d89408afd8280c4fa95db2d054a7611, type: 3}
+  m_Name: PlayerInv
+  m_EditorClassIdentifier: 
+  itemName: Inventory
+  itemDesc: A place to hold items.
+  inventoryWeaponList:
+  - {fileID: 11400000, guid: 989a83b3c8744ec41a33db3772930091, type: 2}
+  - {fileID: 11400000, guid: 49fc28c722769e74fb118183b11da5d3, type: 2}
+  inventoryPickupList:
+  - {fileID: 11400000, guid: 57f5419b5ecf1334480f672c2387594f, type: 2}

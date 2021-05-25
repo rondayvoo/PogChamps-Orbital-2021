@@ -20,7 +20,13 @@ public class PlayerLook : MonoBehaviour
     {
         float xRotate = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float yRotate = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime * -1f;
-        
+
+        if (Cursor.lockState != CursorLockMode.Locked)
+        {
+            if (Input.GetButtonDown("Fire1"))
+                Cursor.lockState = CursorLockMode.Locked;
+        }
+
         headRotation += yRotate;
         headRotation = Mathf.Clamp(headRotation, -90.0f, 90.0f);
         cam.localRotation = Quaternion.Euler(headRotation, 0f, 0f);

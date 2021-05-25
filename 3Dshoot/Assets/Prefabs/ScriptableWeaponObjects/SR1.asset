@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee084025c78b4244281ef46dc3169703, type: 3}
+  m_Name: SR1
+  m_EditorClassIdentifier: 
+  itemName: 
+  itemDesc: 
+  weaponLevel: 1
+  fireDelay: 1
+  reloadTime: 0
+  clipSize: 0
+  ammoCap: 0
+  element: 0
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 1664
+  drawBulletTrail: 1
+  bulletTrail: {fileID: 6515719120629407520, guid: 2fe1ac27d2416f449bb8673d3edd0316,
+    type: 3}
+  bulletImpPF: {fileID: 3285317856543735164, guid: c4f084ec47565224fb3c1ece8a932399,
+    type: 3}
+  baseExp: {fileID: 11400000, guid: 9b77380cd70ce3d4a9b34a97c66bdae9, type: 2}
