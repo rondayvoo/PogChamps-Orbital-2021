@@ -17,4 +17,4 @@ MonoBehaviour:
   charHealth: 500
   charSpeed: 2.5
   heldWeapon: {fileID: 0}
-  stunTime: 1
+  stunTime: 0.4

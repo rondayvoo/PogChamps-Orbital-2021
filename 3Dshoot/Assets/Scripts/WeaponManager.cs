@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : MonoBehaviour, ISaveable
 {
-    [SerializeField] int playerHeldWeapon;
-    [SerializeField] int maxInventorySize;
-    public PlayerInventoryScriptableObject playerInventory;
+    public List<GameObject> playerInventory;
+    public int playerHeldWeapon;
+    public int maxInventorySize;
     int qWeapon = 0;
+    IWeapon currWeapon;
     float currFireDelay;
     public float reachDist;
     public LayerMask gunLayer;
@@ -18,7 +20,11 @@ public class WeaponManager : MonoBehaviour
         foreach (Transform weapon in transform)
         {
             if (iter == playerHeldWeapon)
+            {
                 weapon.gameObject.SetActive(true);
+                currWeapon = weapon.GetComponent<IWeapon>();
+                GameEvents.instance.AmmoCountChange(weapon.GetComponent<BaseWeaponScript>().maxAmmo, currWeapon.currAmmo);
+            }
             else
                 weapon.gameObject.SetActive(false);
         
@@ -32,27 +38,34 @@ public class WeaponManager : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out facing, reachDist, gunLayer))
         {
-            if (playerInventory.inventoryWeaponList.Count >= maxInventorySize)
-            {
-                playerInventory.inventoryWeaponList[playerHeldWeapon] = facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst;
-                wDrop();
-                facing.transform.SetParent(transform);
-                facing.transform.SetSiblingIndex(playerHeldWeapon);
-                facing.rigidbody.detectCollisions = false;
-                facing.rigidbody.isKinematic = true;
-                facing.transform.localPosition = Vector3.zero;
-                facing.transform.localRotation = Quaternion.identity;
-            }
-            
-            else
-            {
-                playerInventory.inventoryWeaponList.Add(facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst);
+            facing.transform.GetComponent<BaseWeaponScript>().pointedAt = true;
 
-                facing.transform.SetParent(transform);
-                facing.rigidbody.detectCollisions = false;
-                facing.rigidbody.isKinematic = true;
-                facing.transform.localPosition = Vector3.zero;
-                facing.transform.localRotation = Quaternion.identity;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (transform.childCount >= 3)
+                {
+                    //playerInventory[playerHeldWeapon] = facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst;
+                    wDrop();
+                    facing.transform.SetParent(transform);
+                    facing.transform.SetSiblingIndex(playerHeldWeapon);
+                    facing.rigidbody.detectCollisions = false;
+                    facing.rigidbody.isKinematic = true;
+                    facing.transform.GetComponent<BaseWeaponScript>().inInventory = true;
+                    facing.transform.localPosition = Vector3.zero;
+                    facing.transform.localRotation = Quaternion.identity;
+                }
+
+                else
+                {
+                    //playerInventory.Add(facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst);
+
+                    facing.transform.SetParent(transform);
+                    facing.rigidbody.detectCollisions = false;
+                    facing.rigidbody.isKinematic = true;
+                    facing.transform.GetComponent<BaseWeaponScript>().inInventory = true;
+                    facing.transform.localPosition = Vector3.zero;
+                    facing.transform.localRotation = Quaternion.identity;
+                }
             }
         }
     }
@@ -75,12 +88,13 @@ public class WeaponManager : MonoBehaviour
 
         foreach (Transform weapon in transform)
         {
-            if (playerInventory.inventoryWeaponList.Count > 0 && iter == playerHeldWeapon)
+            if (transform.childCount > 0 && iter == playerHeldWeapon)
             {
-                weapon.GetComponent<Rigidbody>().position = weapon.GetComponent<Rigidbody>().position + weapon.GetComponent<Rigidbody>().transform.right * 10f;
+                weapon.position = weapon.position + transform.forward * 2f;
                 weapon.parent = null;
                 weapon.GetComponent<Rigidbody>().detectCollisions = true;
                 weapon.GetComponent<Rigidbody>().isKinematic = false;
+                weapon.GetComponent<BaseWeaponScript>().inInventory = false;
                 weapon.GetComponent<Rigidbody>().velocity = Camera.main.transform.up * 5f;
                 return;
             }
@@ -106,33 +120,27 @@ public class WeaponManager : MonoBehaviour
 
     void primaryFireFunction()
     {
-        if (playerInventory.inventoryWeaponList.Count > 0)
+        if (Input.GetButton("Fire1") && currFireDelay <= 0f && currWeapon != null && currWeapon.currAmmo > 0)
         {
-            if (Input.GetButton("Fire1") && currFireDelay <= 0f)
-            {
-                Transform cam = Camera.main.transform;
-                RaycastHit ray;
-
-                Physics.Raycast(cam.position, cam.forward, out ray);
-
-                if (playerInventory.inventoryWeaponList[playerHeldWeapon].drawBulletTrail)
-                    playerInventory.inventoryWeaponList[playerHeldWeapon].drawTrail(transform.GetChild(playerHeldWeapon).GetComponent<WeaponObject>().firepoint, ray.transform);
-
-                playerInventory.inventoryWeaponList[playerHeldWeapon].primaryFire(cam);
-                currFireDelay += playerInventory.inventoryWeaponList[playerHeldWeapon].fireDelay;
-            }
+            Transform cam = Camera.main.transform;
+            currWeapon.primaryFire();
+            currWeapon.currAmmo--;
+            currFireDelay += currWeapon.fireDelay;
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Remove this when trying to implement saving
-        playerInventory.inventoryWeaponList = new List<WeaponScriptableObject>();
+        GameEvents.instance.OnStageClear += weaponTransfer;
+
+        if (GameEvents.instance.stringventory != null)
+            GameEvents.instance.LoadInventory(transform, GameEvents.instance.stringventory, GameEvents.instance.ammoCountCO);
 
         foreach (Transform weaponT in transform)
         {
-            playerInventory.inventoryWeaponList.Add(weaponT.GetComponent<WeaponObject>().weaponInst);
+            //playerInventory.Add(weaponT.attachedGameObject);
+            weaponT.GetComponent<BaseWeaponScript>().inInventory = true;
             weaponT.GetComponent<Rigidbody>().isKinematic = true;
             weaponT.GetComponent<Rigidbody>().detectCollisions = false;
             weaponT.transform.parent = transform;
@@ -141,56 +149,61 @@ public class WeaponManager : MonoBehaviour
         wSelect();
     }
 
+    void OnDestroy()
+    {
+        GameEvents.instance.OnStageClear -= weaponTransfer;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+        if (!MenuManager.gamePaused)
         {
-            qWeapon = playerHeldWeapon;
+            if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+            {
+                qWeapon = playerHeldWeapon;
 
-            if (playerHeldWeapon >= playerInventory.inventoryWeaponList.Count - 1)
+                if (playerHeldWeapon >= transform.childCount - 1)
+                    playerHeldWeapon = 0;
+                else
+                    playerHeldWeapon++;
+            }
+
+            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            {
+                qWeapon = playerHeldWeapon;
+
+                if (playerHeldWeapon <= 0)
+                    playerHeldWeapon = transform.childCount - 1;
+                else
+                    playerHeldWeapon--;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && transform.childCount >= 1)
+            {
+                qWeapon = playerHeldWeapon;
                 playerHeldWeapon = 0;
-            else
-                playerHeldWeapon++;
-        }
+            }
 
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-        {
-            qWeapon = playerHeldWeapon;
+            if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >= 2)
+            {
+                qWeapon = playerHeldWeapon;
+                playerHeldWeapon = 1;
+            }
 
-            if (playerHeldWeapon <= 0)
-                playerHeldWeapon = playerInventory.inventoryWeaponList.Count - 1;
-            else
-                playerHeldWeapon--;
-        }
+            if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount >= 3)
+            {
+                qWeapon = playerHeldWeapon;
+                playerHeldWeapon = 2;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && playerInventory.inventoryWeaponList.Count >= 1)
-        {
-            qWeapon = playerHeldWeapon;
-            playerHeldWeapon = 0;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2) && playerInventory.inventoryWeaponList.Count >= 2)
-        {
-            qWeapon = playerHeldWeapon;
-            playerHeldWeapon = 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3) && playerInventory.inventoryWeaponList.Count >= 3)
-        {
-            qWeapon = playerHeldWeapon;
-            playerHeldWeapon = 2;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            int temp = playerHeldWeapon;
-            playerHeldWeapon = qWeapon;
-            qWeapon = temp;
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                int temp = playerHeldWeapon;
+                playerHeldWeapon = qWeapon;
+                qWeapon = temp;
+            }
+            
             wSwap();
         }
 
@@ -200,4 +213,37 @@ public class WeaponManager : MonoBehaviour
         primaryFireFunction();
         currFireDelay = currFireDelay <= 0f ? 0f : currFireDelay - Time.deltaTime;
     }
+
+    public void weaponTransfer(object sender, EventArgs ev)
+    {
+        GameEvents.instance.SaveInventory(transform);
+    }
+
+    public object captureState()
+    {
+        WeaponTransformSave wts = new WeaponTransformSave();
+        wts.invState = GameEvents.instance.SaveInventory(transform);
+        wts.currHeldWeapon = playerHeldWeapon;
+        wts.ammoCount = new List<int>();
+
+        foreach (Transform weapon in transform)
+            wts.ammoCount.Add(weapon.GetComponent<BaseWeaponScript>().currAmmo);
+
+        return wts;
+    }
+
+    public void restoreState(object state)
+    {
+        WeaponTransformSave wts = (WeaponTransformSave) state;
+        GameEvents.instance.LoadInventory(transform, wts.invState, wts.ammoCount);
+        playerHeldWeapon = wts.currHeldWeapon;
+    }
+}
+
+[System.Serializable]
+public class WeaponTransformSave
+{
+    public int currHeldWeapon;
+    public List<string> invState;
+    public List<int> ammoCount;
 }

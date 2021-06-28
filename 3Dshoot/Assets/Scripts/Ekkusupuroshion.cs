@@ -6,14 +6,23 @@ public class Ekkusupuroshion : MonoBehaviour
 {
     [HideInInspector] public ExplosionScriptableObject baseExp;
     [SerializeField] GameObject damageNumPF;
-    Material mat;
     float timeElapsed = 0f;
+
+    public LayerMask expCollision;
+    public float splashDmg;
+    public bool hasSplashDmg;
+    public float expRadius;
+    public float expForce;
+
+    int dmgCalc(Vector3 closestPoint)
+    {
+        return (int) ((expRadius - Vector3.Distance(closestPoint, transform.position)) / expRadius * splashDmg);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        Collider[] blastzone = Physics.OverlapSphere(transform.position, baseExp.expRadius, baseExp.expCollision);
-        mat = GetComponent<Renderer>().material;
+        Collider[] blastzone = Physics.OverlapSphere(transform.position, expRadius, expCollision);
 
         foreach (Collider blast in blastzone)
         {
@@ -21,23 +30,15 @@ public class Ekkusupuroshion : MonoBehaviour
 
             if (blastRB)
             {
-                int dmgTaken = (int) (baseExp.dmgMultiplier + Random.Range(-baseExp.dmgScalar, baseExp.dmgScalar));
-                GameObject numInst = Instantiate(damageNumPF, blastRB.transform.position + new Vector3(0f, 1f, 0f), transform.rotation);
-
-                if (numInst)
-                    numInst.GetComponent<BoxDamageText>().dmgUpdate(dmgTaken);
-
-                if (blastRB.GetComponent<EnemyMovement>())
+                if (hasSplashDmg)
                 {
-                    blastRB.GetComponent<EnemyMovement>().takeDamage(dmgTaken);
+                    IDamageable dmgObj = blastRB.GetComponent<IDamageable>();
+
+                    if (dmgObj != null)
+                        dmgObj.takeDamage(dmgCalc(blast.ClosestPoint(transform.position)), false);
                 }
 
-                if (blastRB.GetComponent<PlayerMovement>())
-                {
-                    blastRB.GetComponent<PlayerMovement>().takeDamage(dmgTaken);
-                }
-
-                blastRB.AddExplosionForce(baseExp.expForce, transform.position, baseExp.expRadius, 0f, ForceMode.Impulse);
+                blastRB.AddExplosionForce(expForce, transform.position, expRadius, 0f, ForceMode.Impulse);
             }
         }
     }
@@ -45,12 +46,7 @@ public class Ekkusupuroshion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mat.color.a < 0)
-        {
-            Destroy(this.gameObject);
-        }
-
-        mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 0.6f - timeElapsed * 4f);
+        //mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, 0.6f - timeElapsed * 4f);
         timeElapsed += Time.deltaTime;
     }
 }

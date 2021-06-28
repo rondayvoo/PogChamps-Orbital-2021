@@ -98,6 +98,13 @@ MonoBehaviour:
   baseExp: {fileID: 11400000, guid: 757923f92c27ed34ea449ec9323ef409, type: 2}
   damageNumPF: {fileID: 3696978994510814290, guid: 635376bcea444aa4f9ca09830bbeb61f,
     type: 3}
+  expCollision:
+    serializedVersion: 2
+    m_Bits: 896
+  splashDmg: 180
+  hasSplashDmg: 1
+  expRadius: 1.6
+  expForce: 20
 --- !u!54 &8575778700177935399
 Rigidbody:
   m_ObjectHideFlags: 0

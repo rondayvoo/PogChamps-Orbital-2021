@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637570056405456613
-    m_Hash: 548176884
+      ticks: 637586656412448112
+    m_Hash: 123728356
   m_LockFileStatus:
     m_FilePath: C:/Users/rondayvoo/Documents/Unity/PogChamps-Orbital-2021/3Dshoot/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637570056406044502
-    m_Hash: 296843115
+      ticks: 637586656412547834
+    m_Hash: 3868768300
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -121,24 +121,25 @@ m_PackageAssets:
         url: 
         revision: 
         path: 
-    - packageId: com.unity.collab-proxy@1.3.9
+    - packageId: com.unity.collab-proxy@1.5.7
       testable: 0
       isDirectDependency: 1
-      version: 1.3.9
+      version: 1.5.7
       source: 1
-      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.collab-proxy@1.3.9
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.collab-proxy@1.5.7
       assetPath: Packages/com.unity.collab-proxy
       name: com.unity.collab-proxy
-      displayName: Unity Collaborate
+      displayName: Version Control
       author:
         name: 
         email: 
         url: 
       category: Editor
       type: 
-      description: Collaborate with your teammates with the official version control
-        system for Unity. Collaborate is a simple way for teams to save, share, and
-        sync your Unity project.
+      description: The Version Control package gives you the ability to use either
+        Collaborate or Plastic SCM for Unity (beta) in the Unity editor. To use Plastic
+        SCM for Unity (beta), a Plastic SCM subscription is required. Learn more
+        about how you can get started for free by visiting plasticscm.com.
       status: 4
       errors: []
       versions:
@@ -185,8 +186,12 @@ m_PackageAssets:
         - 2.1.0-preview.5
         - 2.1.0-preview.6
         verified: 1.3.9
-      dependencies: []
-      resolvedDependencies: []
+      dependencies:
+      - name: com.unity.nuget.newtonsoft-json
+        version: 2.0.0
+      resolvedDependencies:
+      - name: com.unity.nuget.newtonsoft-json
+        version: 2.0.0
       keywords:
       - vsc
       - version
@@ -210,13 +215,13 @@ m_PackageAssets:
       entitlements:
         isAllowed: 1
       isAssetStorePackage: 0
-      datePublishedTicks: 637314349270000000
+      datePublishedTicks: 637551413290000000
       documentationUrl: 
       hasRepository: 1
       repository:
         type: git
         url: https://github.cds.internal.unity3d.com/unity/com.unity.cloud.collaborate.git
-        revision: fa825106f349f996acff22f718845eab46ca2d7c
+        revision: f079d307344f568804d3ea6d781013135e614e45
         path: 
     - packageId: com.unity.ide.rider@2.0.7
       testable: 0
@@ -264,6 +269,7 @@ m_PackageAssets:
         - 3.0.4
         - 3.0.5
         - 3.0.6
+        - 3.0.7
         compatible:
         - 1.0.2
         - 1.0.6
@@ -289,6 +295,7 @@ m_PackageAssets:
         - 3.0.4
         - 3.0.5
         - 3.0.6
+        - 3.0.7
         verified: 2.0.7
       dependencies:
       - name: com.unity.test-framework
@@ -358,6 +365,7 @@ m_PackageAssets:
         - 2.0.5
         - 2.0.7
         - 2.0.8
+        - 2.0.9
         compatible:
         - 1.0.2
         - 1.0.3
@@ -372,7 +380,8 @@ m_PackageAssets:
         - 2.0.5
         - 2.0.7
         - 2.0.8
-        verified: 2.0.8
+        - 2.0.9
+        verified: 2.0.9
       dependencies:
       - name: com.unity.test-framework
         version: 1.1.9
@@ -529,12 +538,14 @@ m_PackageAssets:
         - 3.0.1
         - 3.0.3
         - 3.1.0
+        - 3.1.1
         compatible:
         - 2.3.0
         - 3.0.1
         - 3.0.3
         - 3.1.0
-        verified: 3.1.0
+        - 3.1.1
+        verified: 3.1.1
       dependencies:
       - name: com.unity.modules.physics
         version: 1.0.0
@@ -773,6 +784,116 @@ m_PackageAssets:
         url: https://github.com/Unity-Technologies/com.unity.progrids.git
         revision: 8c99f5e31791759316786f77c64cfa9b57f03ff6
         path: 
+    - packageId: com.unity.render-pipelines.universal@10.5.0
+      testable: 0
+      isDirectDependency: 1
+      version: 10.5.0
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.render-pipelines.universal@10.5.0
+      assetPath: Packages/com.unity.render-pipelines.universal
+      name: com.unity.render-pipelines.universal
+      displayName: Universal RP
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: The Universal Render Pipeline (URP) is a prebuilt Scriptable Render
+        Pipeline, made by Unity. URP provides artist-friendly workflows that let
+        you quickly and easily create optimized graphics across a range of platforms,
+        from mobile to high-end consoles and PCs.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 7.0.0
+        - 7.0.1
+        - 7.1.1
+        - 7.1.2
+        - 7.1.5
+        - 7.1.6
+        - 7.1.7
+        - 7.1.8
+        - 7.2.0
+        - 7.2.1
+        - 7.3.1
+        - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
+        - 7.6.0
+        - 8.0.1
+        - 8.1.0
+        - 8.2.0
+        - 8.3.1
+        - 9.0.0-preview.14
+        - 9.0.0-preview.35
+        - 9.0.0-preview.55
+        - 9.0.0-preview.72
+        - 10.0.0-preview.26
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
+        - 10.5.0
+        compatible:
+        - 10.5.0
+        verified: 10.5.0
+      dependencies:
+      - name: com.unity.mathematics
+        version: 1.1.0
+      - name: com.unity.render-pipelines.core
+        version: 10.5.0
+      - name: com.unity.shadergraph
+        version: 10.5.0
+      resolvedDependencies:
+      - name: com.unity.mathematics
+        version: 1.1.0
+      - name: com.unity.render-pipelines.core
+        version: 10.5.0
+      - name: com.unity.ugui
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.shadergraph
+        version: 10.5.0
+      - name: com.unity.searcher
+        version: 4.3.2
+      keywords:
+      - graphics
+      - performance
+      - rendering
+      - mobile
+      - render
+      - pipeline
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637550685770000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/Graphics.git
+        revision: 7ff8fd444c179fd9bb380d61f4865be6935b47dd
+        path: 
     - packageId: com.unity.shadergraph@10.5.0
       testable: 0
       isDirectDependency: 1
@@ -972,9 +1093,11 @@ m_PackageAssets:
         - 1.1.20
         - 1.1.22
         - 1.1.24
+        - 1.1.26
         compatible:
         - 1.1.24
-        verified: 1.1.24
+        - 1.1.26
+        verified: 1.1.26
       dependencies:
       - name: com.unity.ext.nunit
         version: 1.0.6
@@ -1380,6 +1503,220 @@ m_PackageAssets:
         type: 
         url: 
         revision: 
+        path: 
+    - packageId: com.unity.ui@1.0.0-preview.14
+      testable: 0
+      isDirectDependency: 1
+      version: 1.0.0-preview.14
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.ui@1.0.0-preview.14
+      assetPath: Packages/com.unity.ui
+      name: com.unity.ui
+      displayName: UI Toolkit
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: "UI Toolkit is a set of features, resources and tools for developing
+        user interfaces (UI). Use it to develop custom UI and extensions for the
+        Unity Editor, runtime debugging tools, and runtime UI for games and applications.\r\n\r\nUI
+        Toolkit includes:\r\n\r\n\u25AA A retained-mode UI system, based on recognized
+        web technologies, that supports stylesheets, and dynamic and contextual event
+        handling.\r\n\u25AA UXML and USS asset types for building and styling user
+        interfaces. These are inspired by standard web technologies such as XML,
+        HTML, and CSS.\r\n\u25AA Tools and resources such as a built-in UI debugger,
+        the support for the UI Builder visual UI authoring tool*, and examples available
+        in the editor.\r\n\r\n*Available via the com.unity.ui.builder package"
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.0.0-preview.3
+        - 1.0.0-preview.6
+        - 1.0.0-preview.7
+        - 1.0.0-preview.8
+        - 1.0.0-preview.9
+        - 1.0.0-preview.11
+        - 1.0.0-preview.12
+        - 1.0.0-preview.13
+        - 1.0.0-preview.14
+        compatible:
+        - 1.0.0-preview.3
+        - 1.0.0-preview.6
+        - 1.0.0-preview.7
+        - 1.0.0-preview.8
+        - 1.0.0-preview.9
+        - 1.0.0-preview.11
+        - 1.0.0-preview.12
+        - 1.0.0-preview.13
+        - 1.0.0-preview.14
+        verified: 
+      dependencies:
+      - name: com.unity.modules.uielementsnative
+        version: 1.0.0
+      - name: com.unity.textcore
+        version: 1.0.0-preview.2
+      resolvedDependencies:
+      - name: com.unity.modules.uielementsnative
+        version: 1.0.0
+      - name: com.unity.modules.ui
+        version: 1.0.0
+      - name: com.unity.modules.imgui
+        version: 1.0.0
+      - name: com.unity.modules.jsonserialize
+        version: 1.0.0
+      - name: com.unity.textcore
+        version: 1.0.0-preview.2
+      keywords:
+      - UI
+      - UIElements
+      - Runtime UI
+      - Editor UI
+      - UI Toolkit
+      - Toolkit
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637484808150000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git+https://github.com/Unity-Technologies/com.unity.ui.git
+        revision: e2c286830f9d1a8daccdf6dfe2a01aaf86facfed
+        path: 
+    - packageId: com.unity.ui.builder@1.0.0-preview.14
+      testable: 0
+      isDirectDependency: 1
+      version: 1.0.0-preview.14
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.ui.builder@1.0.0-preview.14
+      assetPath: Packages/com.unity.ui.builder
+      name: com.unity.ui.builder
+      displayName: UI Builder
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: 'The UI Builder lets you visually create and edit UI assets such
+        as UI documents (.uxml files), and stylesheets (.uss files), that you use
+        with Unity''s UI Toolkit (formerly UIElements).
+
+
+        To open the UI
+        Builder window, select Window > UI Toolkit > UI Builder from the menu.
+
+
+        Note:
+        In Unity 2019.x, you open the UI Builder from the Window > UI > UI Builder
+        menu.
+
+
+        Note: UI Builder is the visual authoring tool for UI Toolkit.
+        It does not include runtime support. To enable runtime support in Unity 2020.1
+        and later, install the UI Toolkit package. For details, please see the UI
+        Builder package documentation.'
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.5.7-preview
+        - 0.5.8-preview
+        - 0.6.1-preview
+        - 0.6.2-preview
+        - 0.7.0-preview
+        - 0.8.0-preview
+        - 0.8.1-preview
+        - 0.8.2-preview
+        - 0.8.3-preview
+        - 0.8.4-preview
+        - 0.9.0-preview
+        - 0.10.0-preview
+        - 0.10.1-preview
+        - 0.10.2-preview
+        - 0.11.0-preview
+        - 0.11.1-preview
+        - 0.11.2-preview
+        - 1.0.0-preview.1
+        - 1.0.0-preview.2
+        - 1.0.0-preview.3
+        - 1.0.0-preview.4
+        - 1.0.0-preview.5
+        - 1.0.0-preview.6
+        - 1.0.0-preview.7
+        - 1.0.0-preview.9
+        - 1.0.0-preview.10
+        - 1.0.0-preview.11
+        - 1.0.0-preview.12
+        - 1.0.0-preview.13
+        - 1.0.0-preview.14
+        compatible:
+        - 0.5.7-preview
+        - 0.5.8-preview
+        - 0.6.1-preview
+        - 0.6.2-preview
+        - 0.7.0-preview
+        - 0.8.0-preview
+        - 0.8.1-preview
+        - 0.8.2-preview
+        - 0.8.3-preview
+        - 0.8.4-preview
+        - 0.9.0-preview
+        - 0.10.0-preview
+        - 0.10.1-preview
+        - 0.10.2-preview
+        - 0.11.0-preview
+        - 0.11.1-preview
+        - 0.11.2-preview
+        - 1.0.0-preview.1
+        - 1.0.0-preview.2
+        - 1.0.0-preview.3
+        - 1.0.0-preview.4
+        - 1.0.0-preview.5
+        - 1.0.0-preview.6
+        - 1.0.0-preview.7
+        - 1.0.0-preview.9
+        - 1.0.0-preview.10
+        - 1.0.0-preview.11
+        - 1.0.0-preview.12
+        - 1.0.0-preview.13
+        - 1.0.0-preview.14
+        verified: 
+      dependencies: []
+      resolvedDependencies: []
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637527381330000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.ui.builder.git
+        revision: bf75273d3ed698e99fc457498430574a11e457bf
         path: 
     - packageId: com.unity.modules.ai@1.0.0
       testable: 0
@@ -3123,6 +3460,55 @@ m_PackageAssets:
         url: 
         revision: 
         path: 
+    - packageId: com.unity.textcore@1.0.0-preview.2
+      testable: 0
+      isDirectDependency: 0
+      version: 1.0.0-preview.2
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.textcore@1.0.0-preview.2
+      assetPath: Packages/com.unity.textcore
+      name: com.unity.textcore
+      displayName: TextCore
+      author:
+        name: 
+        email: 
+        url: 
+      category: Text Rendering
+      type: 
+      description: TextCore is the new and improved text parser and layout engine
+        used by UI Elements and TextMeshPro
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.0.0-preview.2
+        compatible:
+        - 1.0.0-preview.2
+        verified: 
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - TextCore
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 637390825210000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.TextCore.git
+        revision: 81f16370ad1d5bba43e5d1d1e3fc887152e67c09
+        path: 
     - packageId: com.unity.ext.nunit@1.0.6
       testable: 0
       isDirectDependency: 0
@@ -3408,6 +3794,81 @@ m_PackageAssets:
         url: https://github.cds.internal.unity3d.com/unity/com.unity.searcher.git
         revision: 798bfb84c8f09f7788a3a88c3c16d72c50451530
         path: 
+    - packageId: com.unity.mathematics@1.1.0
+      testable: 0
+      isDirectDependency: 0
+      version: 1.1.0
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.mathematics@1.1.0
+      assetPath: Packages/com.unity.mathematics
+      name: com.unity.mathematics
+      displayName: Mathematics
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: Unity's C# SIMD math library providing vector types and math functions
+        with a shader like syntax.
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 0.0.12-preview.2
+        - 0.0.12-preview.5
+        - 0.0.12-preview.8
+        - 0.0.12-preview.10
+        - 0.0.12-preview.11
+        - 0.0.12-preview.13
+        - 0.0.12-preview.17
+        - 0.0.12-preview.19
+        - 0.0.12-preview.20
+        - 1.0.0-preview.1
+        - 1.0.1
+        - 1.1.0-preview.1
+        - 1.1.0
+        - 1.2.1
+        compatible:
+        - 0.0.12-preview.2
+        - 0.0.12-preview.5
+        - 0.0.12-preview.8
+        - 0.0.12-preview.10
+        - 0.0.12-preview.11
+        - 0.0.12-preview.13
+        - 0.0.12-preview.17
+        - 0.0.12-preview.19
+        - 0.0.12-preview.20
+        - 1.0.0-preview.1
+        - 1.0.1
+        - 1.1.0-preview.1
+        - 1.1.0
+        - 1.2.1
+        verified: 1.2.1
+      dependencies: []
+      resolvedDependencies: []
+      keywords:
+      - unity
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 636984649280000000
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: git@github.com:Unity-Technologies/Unity.Mathematics.git
+        revision: 0a3dfafaf606098ea681de4c4be60f3aac63b773
+        path: 
     - packageId: com.unity.settings-manager@1.0.3
       testable: 0
       isDirectDependency: 0
@@ -3465,6 +3926,64 @@ m_PackageAssets:
         type: git
         url: git+https://github.com/Unity-Technologies/com.unity.settings-manager.git
         revision: 473664ccba1496294b741cf169740a5d54b3d0b6
+        path: 
+    - packageId: com.unity.nuget.newtonsoft-json@2.0.0
+      testable: 0
+      isDirectDependency: 0
+      version: 2.0.0
+      source: 1
+      resolvedPath: C:\Users\rondayvoo\Documents\Unity\PogChamps-Orbital-2021\3Dshoot\Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0
+      assetPath: Packages/com.unity.nuget.newtonsoft-json
+      name: com.unity.nuget.newtonsoft-json
+      displayName: Newtonsoft Json
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: library
+      description: 'Newtonsoft Json for use in Unity projects and Unity packages.
+        Currently synced to version 12.0.2.
+
+
+        This package is used for advanced
+        json serialization and deserialization. Most Unity users will be better suited
+        using the existing json tools built into Unity.
+
+        To avoid assembly
+        clashes, please use this package if you intend to use Newtonsoft Json.'
+      status: 4
+      errors: []
+      versions:
+        all:
+        - 1.1.2
+        - 2.0.0
+        compatible:
+        - 1.1.2
+        - 2.0.0
+        verified: 2.0.0
+      dependencies: []
+      resolvedDependencies: []
+      keywords: []
+      registry:
+        id: main
+        name: 
+        url: https://packages.unity.com
+        scopes: []
+        isDefault: 1
+        capabilities: 7
+      hasRegistry: 1
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 0
+      documentationUrl: 
+      hasRepository: 1
+      repository:
+        type: git
+        url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+        revision: d2fd6ed876261bbd82f59199ad711e7667bf633a
         path: 
   m_LocalPackages:
     m_LocalFileStatus: []

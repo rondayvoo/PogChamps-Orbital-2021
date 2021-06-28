@@ -11,9 +11,7 @@ public class RocketLauncherScriptableObject : WeaponScriptableObject
 
     public override void primaryFire(Transform cam)
     {
-        GameObject proj = Instantiate(rocketPF, cam.position, cam.rotation);
-        proj.GetComponent<RocketScience>().baseProj = baseProj;
-        proj.GetComponent<RocketScience>().baseExp = baseExp;
+        Instantiate(rocketPF, cam.position, cam.rotation);
     }
 }
 

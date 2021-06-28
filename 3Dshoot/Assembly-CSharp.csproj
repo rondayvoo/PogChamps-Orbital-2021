@@ -56,64 +56,114 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Scriptable Objects\PlayerInventoryScriptableObject.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Scripts\CFX_LightIntensityFade.cs" />
     <Compile Include="Assets\Scripts\MuzzFlashScript.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\EnemyScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\ItemScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\PauseMenuScript.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\BuffsDebuffsCharacterScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\TargetScript.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo.cs" />
+    <Compile Include="Assets\Scripts\AmmoCountScript.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\PickupScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\BuffsDebuffsWeaponScriptableObject.cs" />
     <Compile Include="Assets\Scripts\GameEvents.cs" />
-    <Compile Include="Assets\Scripts\RoomModuleScript.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\Spawn System\CFX_SpawnSystem.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\WeaponInstance.cs" />
-    <Compile Include="Assets\Scripts\EnemyMovement.cs" />
-    <Compile Include="Assets\Scripts\LevelGenScript.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\PlayerScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\RocketScience.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\CFX_AutoStopLoopedEffect.cs" />
+    <Compile Include="Assets\Scripts\EnemyHealthBarScript.cs" />
     <Compile Include="Assets\Scripts\Billboard.cs" />
     <Compile Include="Assets\Scripts\PlayerPickupManager.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
-    <Compile Include="Assets\Scripts\HealthBarScript.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\ProjectileScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\Scriptable Objects\WeaponScriptableObject.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\LB3D\CrabMonster\LB3DGameManager.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Scripts\WFX_BulletHoleDecal.cs" />
+    <Compile Include="Assets\ExpBarScript.cs" />
     <Compile Include="Assets\Scripts\PlayerLook.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+    <Compile Include="Assets\Scripts\RocketLauncherScript.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\CharacterScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\RocketLauncherScriptableObject.cs" />
-    <Compile Include="Assets\Scripts\WeaponObject.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_Wall.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\LB3D\CrabMonster\Scripts\Rikayon.cs" />
+    <Compile Include="Assets\StageIndicator.cs" />
+    <Compile Include="Assets\DamageScreen.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\AssaultRifleScriptableObject.cs" />
     <Compile Include="Assets\Scripts\JumpPad.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\SniperRifleScriptableObject.cs" />
-    <Compile Include="Assets\Tracer Rounds\Scripts\TracerScript.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Scripts\CFX_AutoDestructShuriken.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamageable.cs" />
     <Compile Include="Assets\Scripts\Ekkusupuroshion.cs" />
     <Compile Include="Assets\Scripts\PickupObject.cs" />
-    <Compile Include="Assets\Scripts\BoxDamageText.cs" />
     <Compile Include="Assets\Scripts\Scriptable Objects\ExplosionScriptableObject.cs" />
-    <Compile Include="Assets\Tracer Rounds\Scripts\ShootScript.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ISaveable.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\PlayerInventoryScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\MeleeEnemy.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_DeleteAfterDelay.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_RotateCamera.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_RandomDir.cs" />
+    <Compile Include="Assets\Scripts\RigidbodySaveScript.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\EnemyScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\ItemScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\PortalScript.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\BuffsDebuffsCharacterScriptableObject.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Scripts\WFX_LightFlicker.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\BuffsDebuffsWeaponScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\RoomModuleScript.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IWeapon.cs" />
+    <Compile Include="Assets\Scripts\BaseEnemyScript.cs" />
+    <Compile Include="Assets\Scripts\LevelGenScript.cs" />
+    <Compile Include="Assets\Scripts\AssaultRifleScript.cs" />
+    <Compile Include="Assets\Scripts\WeaponGraphics.cs" />
+    <Compile Include="Assets\Scripts\RocketScience.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\ProjectileScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\PlayerHealthBarScript.cs" />
+    <Compile Include="Assets\Scripts\Scriptable Objects\WeaponScriptableObject.cs" />
+    <Compile Include="Assets\Scripts\ShotgunScript.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\CFX_Demo_Translate.cs" />
+    <Compile Include="Assets\Scripts\LoadingBarScript.cs" />
+    <Compile Include="Assets\Scripts\BaseWeaponScript.cs" />
+    <Compile Include="Assets\Scripts\BoxDamageText.cs" />
+    <Compile Include="Assets\Scripts\LaserRifleScript.cs" />
+    <Compile Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Demo\Assets\WFX_Demo_New.cs" />
+    <Compile Include="Assets\Scripts\SceneLoaderCallback.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Multiply Soft.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Multiply Soft Scroll.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\_Effects\MuzzleFlashes\!MuzzleFlash Differences.txt" />
+     <None Include="Assets\External Assets\Unity Store Assets\LB3D\CrabMonster\DOCUMENTATION.txt" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Specular TintColor.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Add Scroll.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\_Effects (Mobile)\MuzzleFlashes\!MuzzleFlash Differences.txt" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Particle Add A8.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Smoke Scroll.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Particle Multiply A8.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend Scroll.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-     <None Include="Assets\Tracer Rounds\License (Read before using).txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Particle AddSoft A8.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\!WarFX Readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S Alpha-Diffuse TintColor.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\External Assets\Unity Store Assets\JMO Assets\WarFX\Shaders\WFX_S AlphaBlend NoSoftParticles.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
@@ -250,9 +300,6 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine.UIElementsNativeModule">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsNativeModule.dll</HintPath>
     </Reference>
@@ -325,9 +372,6 @@
     <Reference Include="UnityEditor.SceneTemplateModule">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEditor.SceneTemplateModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.UIElementsModule">
-      <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIElementsModule.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UIElementsSamplesModule">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEditor.UIElementsSamplesModule.dll</HintPath>
     </Reference>
@@ -336,6 +380,9 @@
     </Reference>
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:\Users\rondayvoo\Documents\Unity\2020.3.8f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -688,6 +735,12 @@
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -733,32 +786,86 @@
     <Reference Include="Unity.ProGrids.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ProGrids.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UIBuilderModule">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UIBuilderModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsInputSystemModule">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UIElementsInputSystemModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PlasticSCM.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ShaderGraph.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.UIElements.Text">
+      <HintPath>Library\ScriptAssemblies\Unity.UIElements.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextCore">
+      <HintPath>Library\ScriptAssemblies\Unity.TextCore.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProBuilder.AssetIdRemapUtility">
       <HintPath>Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Timeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Timeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
+    <Reference Include="Unity.TextCore.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.TextCore.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Mathematics.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UIElementsModule">
+      <HintPath>Library\ScriptAssemblies\UnityEditor.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.UIElements.Editor.Text">
+      <HintPath>Library\ScriptAssemblies\Unity.UIElements.Editor.Text.dll</HintPath>
     </Reference>
     <Reference Include="Unity.ProGrids">
       <HintPath>Library\ScriptAssemblies\Unity.ProGrids.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UIElementsGameObjectsModule">
+      <HintPath>Library\ScriptAssemblies\UnityEngine.UIElementsGameObjectsModule.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="OEBIF.csproj">
+      <Project>{054B4E00-514B-F1C7-D725-B4D1CC2083B2}</Project>
+      <Name>OEBIF</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponentsEditor.csproj">
+      <Project>{EA498BD9-36D7-2994-5F4B-771D098556C5}</Project>
+      <Name>NavMeshComponentsEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="NavMeshComponents.csproj">
+      <Project>{9B6E5C84-192B-3B43-E873-AE3146B3E463}</Project>
+      <Name>NavMeshComponents</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
