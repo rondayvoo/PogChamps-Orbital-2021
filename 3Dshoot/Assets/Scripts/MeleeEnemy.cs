@@ -13,7 +13,7 @@ public class MeleeEnemy : BaseEnemyScript
     // Start is called before the first frame update
     void Start()
     {
-        animator.SetTrigger("Rest");
+        //animator.SetTrigger("Rest");
     }
 
     // Update is called once per frame
@@ -23,19 +23,23 @@ public class MeleeEnemy : BaseEnemyScript
 
         if (pCheck.Length > 0 && attackTimer <= 0f)
         {
-            animator.SetTrigger("Attack_1");
+            if (animator)
+                animator.SetTrigger("Attack_1");
+
             agent.speed = 0f;
             pCheck[0].GetComponent<PlayerMovement>().takeDamage(meleeDamage, false);
             attackTimer = attackSpeed;
         }
 
-        else if (stunTimer <= 0f && grounded() && Vector3.Distance(Camera.main.transform.position, transform.position) <= lookRadius && pCheck.Length <= 0)
+        else if (stunTimer <= 0f && grounded() && Camera.main && Vector3.Distance(Camera.main.transform.position, transform.position) <= lookRadius && pCheck.Length <= 0)
         {
+            if (animator)
+                animator.SetTrigger("Walk_Cycle_1");
+
             agent.speed = enemySpeed;
             agent.enabled = true;
             rb.isKinematic = true;
             agent.SetDestination(Camera.main.transform.position);
-            animator.SetTrigger("Walk_Cycle_1");
         }
 
         else
@@ -49,6 +53,4 @@ public class MeleeEnemy : BaseEnemyScript
         stunTimer = stunTimer <= 0f ? 0f : stunTimer - Time.deltaTime;
         attackTimer = attackTimer <= 0f ? 0f : attackTimer - Time.deltaTime;
     }
-
-
 }

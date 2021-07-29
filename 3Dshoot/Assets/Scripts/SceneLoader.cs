@@ -56,7 +56,7 @@ public static class SceneLoader
         }
     }
 
-    public static void LoadLevel(int level)
+    public static void LoadLevel(int stage)
     {
         Load(Scene.gameScene);
     }

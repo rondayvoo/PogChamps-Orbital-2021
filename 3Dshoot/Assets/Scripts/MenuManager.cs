@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Rendering;
+using System;
 
 public class MenuManager : MonoBehaviour
 {
     public static bool gamePaused;
     [SerializeField] GameObject pauseUI;
     [SerializeField] GameObject optionsUI;
+    [SerializeField] GameObject gameOverUI;
     [SerializeField] GameObject minimapObj;
     [SerializeField] TMP_Dropdown resolutionDropdown;
     [SerializeField] TMP_Dropdown qualityDropdown;
     [SerializeField] RenderPipelineAsset[] qualityLvls;
+    [SerializeField] Slider volumeSlider;
     Resolution[] resolutions;
 
     public void gPause()
@@ -21,6 +25,7 @@ public class MenuManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         gamePaused = true;
+        GameEvents.instance.allowedToShoot = false;
         pauseUI.SetActive(true);
     }
 
@@ -31,18 +36,32 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = 1f;
         gamePaused = false;
         pauseUI.SetActive(false);
+        GameEvents.instance.allowedToShoot = true;
+    }
+
+    public void gMainMenuWithSave()
+    {
+        gSave();
+        Time.timeScale = 1f;
+        GameEvents.instance.playerSpawn.SetActive(false);
+        SceneLoader.Load(SceneLoader.Scene.menuScene);
+    }
+
+    public void gQuitGameWithSave()
+    {
+        gSave();
+        Application.Quit();
     }
 
     public void gMainMenu()
     {
-        gSave();
         Time.timeScale = 1f;
+        GameEvents.instance.playerSpawn.SetActive(false);
         SceneLoader.Load(SceneLoader.Scene.menuScene);
     }
 
     public void gQuitGame()
     {
-        gSave();
         Application.Quit();
     }
 
@@ -85,10 +104,24 @@ public class MenuManager : MonoBehaviour
         QualitySettings.renderPipeline = qualityLvls[index];
     }
 
+    public void gSetVolume(float vol)
+    {
+        AudioListener.volume = vol / volumeSlider.maxValue;
+    }
+
     public void gSave()
     {
         GameEvents.instance.Save();
         Debug.Log("Game saved.");
+    }
+
+    public void showGameOver(object sender, EventArgs ev)
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0f;
+        gamePaused = true;
+        gameOverUI.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -111,6 +144,14 @@ public class MenuManager : MonoBehaviour
         gResume();
         resolutionDropdown.AddOptions(resOptions);
         qualityDropdown.value = QualitySettings.GetQualityLevel();
+        volumeSlider.value = AudioListener.volume / 1.0f * volumeSlider.maxValue;
+
+        GameEvents.instance.OnPlayerDie += showGameOver;
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.instance.OnPlayerDie -= showGameOver;
     }
 
     // Update is called once per frame
@@ -118,7 +159,7 @@ public class MenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gamePaused)
+            if (gamePaused && pauseUI.activeSelf)
                 gResume();
             else
                 gPause();

@@ -34,7 +34,10 @@ public class BoxDamageText : MonoBehaviour
     void Update()
     {
         if (critTaken)
+        {
             tMesh.text = damageTaken.ToString() + "!";
+            tMesh.color = Color.red;
+        }
         else
             tMesh.text = damageTaken.ToString();
 

@@ -304,6 +304,7 @@ GameObject:
   - component: {fileID: 4739011502690605215}
   - component: {fileID: 3984082188372021864}
   - component: {fileID: 5778154881779069165}
+  - component: {fileID: 80666676213992686}
   m_Layer: 7
   m_Name: CrabEnemy
   m_TagString: Untagged
@@ -372,6 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 800
+  enemyExperience: 80
   enemySpeed: 2.5
   stunTime: 0.1
   lookRadius: 20
@@ -382,8 +384,9 @@ MonoBehaviour:
     m_Bits: 512
   damageNumPF: {fileID: 4637301593419234592}
   meleeDamage: 50
-  attackRange: 3
+  attackRange: 2
   attackSpeed: 1
+  animator: {fileID: 80666676213992686}
 --- !u!195 &5778154881779069165
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -406,6 +409,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &80666676213992686
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143454812831734028}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 5779b1a41ccf45b45bfc238034373133, type: 3}
+  m_Controller: {fileID: 9100000, guid: 62f12fab7442c5b40bb95b8331dd9001, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3273168290556308823
 GameObject:
   m_ObjectHideFlags: 0

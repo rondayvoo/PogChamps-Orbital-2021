@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +8,7 @@ public class BaseEnemyScript : MonoBehaviour, IDamageable, ISaveable
     protected Rigidbody rb;
     public int enemyMaxHealth;
     protected int enemyCurrHealth;
+    public int enemyExperience;
     public float enemySpeed;
     public float stunTime;
     public float lookRadius;
@@ -56,10 +57,15 @@ public class BaseEnemyScript : MonoBehaviour, IDamageable, ISaveable
         agent.speed = enemySpeed;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        GameEvents.instance.OnPlayerStart += healthUpdate;
+    }
+
+    // Update is called once per frame
+    void healthUpdate(object sender, EventArgs ev)
+    {
+        healthbar.healthUpdate(enemyCurrHealth);
     }
 
     public object captureState()

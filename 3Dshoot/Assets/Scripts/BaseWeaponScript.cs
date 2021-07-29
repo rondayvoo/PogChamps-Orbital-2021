@@ -20,7 +20,7 @@ public class BaseWeaponScript : MonoBehaviour, IWeapon
     private List<cakeslice.Outline> outlineList = new List<cakeslice.Outline>();
     //public List<WeaponInstance> modifiers;
 
-    void Start()
+    void Awake()
     {
         currAmmo = maxAmmo;
 

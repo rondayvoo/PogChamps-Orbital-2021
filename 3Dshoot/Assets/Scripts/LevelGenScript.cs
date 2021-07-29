@@ -8,9 +8,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class LevelGenScript : MonoBehaviour
 {
-    public List<GameObject> roomModules;
+    public List<GameObject> roomModulesL1;
+    public GameObject spawnRoom;
+    Vector3 spawnLocation;
     public int iter;
-    public int cycles;
 
     public int seed;
     public bool seededRuns;
@@ -25,16 +26,17 @@ public class LevelGenScript : MonoBehaviour
     List<Transform> disconnectedDoors = new List<Transform>();
     List<GameObject> enemyPositions = new List<GameObject>();
 
-    public void buildRooms()
+    public void buildRooms(List<GameObject> roomModules)
     {
         //Build initial room
-        GameObject initialModule = Instantiate(roomModules[rng.Next(roomModules.Count)], transform.position, Quaternion.identity);
+        GameObject initialModule = Instantiate(spawnRoom, transform.position, Quaternion.identity);
         disconnectedDoors.AddRange(initialModule.GetComponent<RoomModuleScript>().availableDoors);
+        spawnLocation = initialModule.GetComponent<RoomModuleScript>().enemyParent.position;
         createdModules.Add(initialModule);
         initialModule.transform.SetParent(transform);
 
         //Recursively generate other rooms
-        for (int i = 0; i < iter - 1; i++)
+        for (int i = 0; i < iter; i++)
         {
             bool roomFound = false;
             Transform[] targetPoints = disconnectedDoors.OrderBy(d => rng.Next()).ToArray();
@@ -156,7 +158,6 @@ public class LevelGenScript : MonoBehaviour
                     enemyPositions.Add(enemy.gameObject);
             }
         }
-            
     }
 
     public void removeEnemyFromList(object sender, GameEvents.OnEnemyKillEventArgs ev)
@@ -189,14 +190,19 @@ public class LevelGenScript : MonoBehaviour
         GameEvents.instance.OnSave += Save;
         GameEvents.instance.OnEnemyKill += removeEnemyFromList;
 
+        GameObject player = GameEvents.instance.playerSpawn;
+
         if (GameEvents.instance.loadSavedGame)
         {
+            player.GetComponent<PlayerSave>().Load();
             Load();
-            GameEvents.instance.loadSavedGame = false;
         }
 
         else
         {
+            player.transform.position = new Vector3 (8, 3, -3);
+            player.transform.rotation = Quaternion.identity * Quaternion.Euler(0f, 180f, 0f);
+
             if (seededRuns)
                 rng = new System.Random(seed);
             else
@@ -206,12 +212,13 @@ public class LevelGenScript : MonoBehaviour
                 rng = new System.Random(rngSeed);
             }
 
-            buildRooms();
+            buildRooms(roomModulesL1);
             addCycles();
             nmSetup();
             spawnEnemies();
         }
 
+        GameEvents.instance.PlayerStart(player);
         addEnemiesToList();
     }
 
@@ -222,7 +229,7 @@ public class LevelGenScript : MonoBehaviour
     }
 
     //Saving the game
-    private string savePath => $"{Application.persistentDataPath}/save.md";
+    private string savePath => $"{Application.persistentDataPath}/saveL.md";
 
     private void Save(object sender, EventArgs ev)
     {
@@ -238,6 +245,8 @@ public class LevelGenScript : MonoBehaviour
     public LevelSaveData captureState()
     {
         LevelSaveData lsd = new LevelSaveData();
+        lsd.stage = GameEvents.instance.currStage;
+        lsd.substage = GameEvents.instance.currSubstage;
         lsd.seed = seed;
         lsd.objSaveData = new List<object>();
         lsd.wsdList = new List<WeaponSaveData>();
@@ -283,10 +292,23 @@ public class LevelGenScript : MonoBehaviour
 
     public void restoreState(LevelSaveData lsd)
     {
+        GameEvents.instance.currStage = lsd.stage;
+        GameEvents.instance.currSubstage = lsd.substage;
+
         seed = lsd.seed;
         destroyRooms();
         rng = new System.Random(lsd.seed);
-        buildRooms();
+
+        switch (lsd.stage)
+        {
+            case 1:
+                buildRooms(roomModulesL1);
+                break;
+            default:
+                Debug.LogError("Error: The scene that you are trying to load does not exist.");
+                break;
+        }
+        
         addCycles();
         nmSetup();
         spawnEnemies();
@@ -301,8 +323,6 @@ public class LevelGenScript : MonoBehaviour
             saveable.restoreState(lsd.objSaveData[index]);
             index++;
         }
-
-        //List<WeaponSaveData> wsd = (List<WeaponSaveData>) lsd.wsdList;
 
         foreach (WeaponSaveData wsd in lsd.wsdList)
         {
@@ -321,8 +341,6 @@ public class LevelGenScript : MonoBehaviour
                         rb.velocity = new Vector3(wsd.velocity[0], wsd.velocity[1], wsd.velocity[2]);
                 }
             }
-
-            
         }
     }
 
@@ -351,9 +369,12 @@ public class LevelGenScript : MonoBehaviour
 [System.Serializable]
 public class LevelSaveData
 {
+    public int stage;
+    public int substage;
     public int seed;
     public List<object> objSaveData;
     public List<WeaponSaveData> wsdList;
+    public List<object> playerSaveData;
 }
 
 [System.Serializable]

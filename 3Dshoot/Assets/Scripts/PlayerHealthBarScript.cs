@@ -14,12 +14,23 @@ public class PlayerHealthBarScript : MonoBehaviour
     public void Start()
     {
         fill.color = gradient.Evaluate(slider.normalizedValue);
+        GameEvents.instance.OnPlayerStart += healthInit;
         GameEvents.instance.OnPlayerHit += healthUpdate;
     }
 
     void OnDestroy()
     {
+        GameEvents.instance.OnPlayerStart -= healthInit;
         GameEvents.instance.OnPlayerHit -= healthUpdate;
+    }
+
+    public void healthInit(object sender, GameEvents.OnPlayerStartEventArgs ev)
+    {
+        PlayerMovement pm = ev.player.GetComponent<PlayerMovement>();
+        TMPHealth.text = pm.playerCurrHealth.ToString();
+        slider.maxValue = pm.playerMaxHealth;
+        slider.value = pm.playerCurrHealth;
+        fill.color = gradient.Evaluate(slider.normalizedValue);
     }
 
     public void healthUpdate(object sender, GameEvents.OnPlayerHitEventArgs ev)

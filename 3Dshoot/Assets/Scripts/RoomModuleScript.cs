@@ -31,9 +31,6 @@ public class RoomModuleScript : MonoBehaviour
         foreach (Transform child in doorParent)
         {
             availableDoors.Add(child);
-
-            //foreach (Transform door in child)
-            //    door.gameObject.SetActive(false);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class GameEvents : MonoBehaviour
@@ -12,6 +13,12 @@ public class GameEvents : MonoBehaviour
     {
         stringventory = null;
         ammoCountCO = null;
+
+        if (!GameObject.FindGameObjectWithTag("Player"))
+        {
+            playerSpawn = Instantiate(playerPF);
+            playerSpawn.SetActive(false);
+        }
 
         if (instance == null)
         {
@@ -25,9 +32,11 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    public bool loadSavedGame = false;
-
+    [HideInInspector] public GameObject playerSpawn;
+    [HideInInspector] public bool loadSavedGame = false;
+    [HideInInspector] public bool allowedToShoot = false;
     //Player stuff to carry over
+    public GameObject playerPF;
     [HideInInspector] public List<string> stringventory;
     [HideInInspector] public List<int> ammoCountCO;
     //[HideInInspector] public int playerHealth;
@@ -42,7 +51,6 @@ public class GameEvents : MonoBehaviour
     public List<string> SaveInventory(Transform weaponTransform)
     {
         List<string> savedInv = new List<string>();
-        List<int> savedAmmo = new List<int>();
 
         foreach (Transform weapon in weaponTransform)
         {
@@ -51,14 +59,12 @@ public class GameEvents : MonoBehaviour
                 if (weapon.gameObject.name.Replace("(Clone)", "") == prefab.name)
                 {
                     savedInv.Add(prefab.name);
-                    savedAmmo.Add(weapon.GetComponent<IWeapon>().currAmmo);
+                    Debug.Log("Weapon saved.");
                     break;
                 }
             }
         }
 
-        stringventory = savedInv;
-        ammoCountCO = savedAmmo;
         return savedInv;
     }
 
@@ -75,12 +81,12 @@ public class GameEvents : MonoBehaviour
             {
                 if (prefab.name == stringW)
                 {
-                    GameObject instance = Instantiate(prefab);
+                    Debug.Log(stringW);
+                    GameObject instance = Instantiate(prefab, weaponTransform);
                     instance.GetComponent<Rigidbody>().isKinematic = true;
                     instance.GetComponent<Rigidbody>().detectCollisions = false;
                     instance.transform.position = weaponTransform.position;
                     instance.transform.rotation = weaponTransform.rotation;
-                    instance.transform.parent = weaponTransform;
                     instance.GetComponent<IWeapon>().currAmmo = savedAmmo[index];
                     break;
                 }
@@ -88,6 +94,23 @@ public class GameEvents : MonoBehaviour
 
             index++;
         }
+    }
+
+    public GameObject playerReset()
+    {
+        DestroyImmediate(playerSpawn);
+        playerSpawn = Instantiate(playerPF);
+        return playerSpawn;
+    }
+
+    public event EventHandler<OnPlayerStartEventArgs> OnPlayerStart;
+    public class OnPlayerStartEventArgs : EventArgs
+    {
+        public GameObject player;
+    }
+    public void PlayerStart(GameObject player)
+    {
+        OnPlayerStart?.Invoke(this, new OnPlayerStartEventArgs { player = player });
     }
 
     public event EventHandler<OnPlayerHitEventArgs> OnPlayerHit;
@@ -128,11 +151,17 @@ public class GameEvents : MonoBehaviour
      * }
      */
 
-    //public event EventHandler OnPlayerDie;
-    //public void PlayerDie()
-    //{
-    //    OnPlayerDie?.Invoke(this, EventArgs.Empty);
-    //}
+    public event EventHandler OnPlayerDie;
+    public void PlayerDie()
+    {
+        OnPlayerDie?.Invoke(this, EventArgs.Empty);
+
+        if (File.Exists($"{Application.persistentDataPath}/saveL.md"))
+        {
+            File.Delete($"{Application.persistentDataPath}/saveL.md");
+            File.Delete($"{Application.persistentDataPath}/saveP.md");
+        }
+    }
 
     //public event EventHandler OnEnemyHit;
     /* 
@@ -146,22 +175,28 @@ public class GameEvents : MonoBehaviour
     public event EventHandler<OnEnemyKillEventArgs> OnEnemyKill;
     public class OnEnemyKillEventArgs : EventArgs
     {
-         public GameObject enemy;
+        public GameObject enemy;
     }
     public void EnemyKill(GameObject enemy)
     {
         OnEnemyKill?.Invoke(this, new OnEnemyKillEventArgs { enemy = enemy });
     }
-    
 
     public event EventHandler OnStageClear;
     public void StageClear()
     {
         OnStageClear?.Invoke(this, EventArgs.Empty);
+        loadSavedGame = false;
         currSubstage++;
+
+        if (currSubstage > 4)
+        {
+            currSubstage = 1;
+            currStage++;
+        }
+
         SceneLoader.LoadLevel(currStage);
     }
-    
 
     public event EventHandler OnSave;
     public void Save()

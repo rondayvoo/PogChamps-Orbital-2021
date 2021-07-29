@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
-public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
+public class PlayerMovement : MonoBehaviour, IDamageable
 {
     Rigidbody rb;
     //public PlayerScriptableObject playerProfile;
@@ -11,9 +14,12 @@ public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
     public float playerSpeed;
     public float playerMaxAccel;
     public int playerMaxHealth;
-    private int playerCurrHealth;
-    private const int MAX_JUMP = 2;
-    private int currentJump = 0;
+    [HideInInspector] public int playerCurrHealth;
+    [HideInInspector] public int playerLevel;
+    [HideInInspector] public int playerExperience;
+    public int expToLevel;
+    //private const int MAX_JUMP = 2;
+    //private int currentJump = 0;
     //private int jumpcounter = 0;
     //private bool canDoubleJump = false;
     [SerializeField] Transform groundChecker;
@@ -22,23 +28,20 @@ public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
     Vector3 totalForce;
     bool spaceKey = false;
     bool spacePush = false;
-    [SerializeField]
-    private AudioSource jumpSound;
-    [SerializeField]
-    private AudioSource jumpSound2;
-    [SerializeField]
-    private AudioSource footstepsSound;
+    [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource jumpSound2;
+    [SerializeField] private AudioSource footstepsSound;
 
     bool grounded()
     {
         Collider[] colliders = Physics.OverlapSphere(groundChecker.position, 0.2f, groundLayer);
-    
+
         if (colliders.Length > 0)
         {
-            currentJump = 0;
+            //currentJump = 0;
             return true;
         }
-    
+
         return false;
     }
 
@@ -57,16 +60,37 @@ public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
     {
         playerCurrHealth -= dmg;
         GameEvents.instance.PlayerHit(playerMaxHealth, playerCurrHealth, dmg);
+
+        if (playerCurrHealth <= 0)
+            GameEvents.instance.PlayerDie();
+    }
+
+    public void addExp(object sender, GameEvents.OnEnemyKillEventArgs ev)
+    {
+        playerExperience += ev.enemy.GetComponent<BaseEnemyScript>().enemyExperience;
+        playerLevel = playerExperience / expToLevel + 1;
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //Remove this when trying to implement saving
-        //inventory.inventoryPickupList = new List<PickupScriptableObject>();
-
         playerCurrHealth = playerMaxHealth;
+        playerLevel = 1;
+        playerExperience = 0;
+
         rb = GetComponent<Rigidbody>();
+        GameEvents.instance.PlayerStart(gameObject);
+        GameEvents.instance.OnEnemyKill += addExp;
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.instance.OnEnemyKill -= addExp;
     }
 
     // Update is called once per frame
@@ -79,8 +103,8 @@ public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
 
         totalForce = (horiInput + vertInput).normalized;
 
-        float speedMod = 0f;
-        float jumpMod = 0f;
+        //float speedMod = 0f;
+        //float jumpMod = 0f;
 
         //foreach (PickupScriptableObject pickup in inventory.inventoryPickupList)
         //{
@@ -143,47 +167,4 @@ public class PlayerMovement : MonoBehaviour, IDamageable, ISaveable
             //}
         }
     }
-
-    public object captureState()
-    {
-        rb = GetComponent<Rigidbody>();
-        PlayerSaveData psd = new PlayerSaveData();
-
-        psd.position = new float[3];
-        psd.position[0] = rb.position.x;
-        psd.position[1] = rb.position.y;
-        psd.position[2] = rb.position.z;
-
-        psd.rotation = new float[4];
-        psd.rotation[0] = rb.rotation.x;
-        psd.rotation[1] = rb.rotation.y;
-        psd.rotation[2] = rb.rotation.z;
-        psd.rotation[3] = rb.rotation.w;
-
-        psd.velocity = new float[3];
-        psd.velocity[0] = rb.velocity.x;
-        psd.velocity[1] = rb.velocity.y;
-        psd.velocity[2] = rb.velocity.z;
-
-        return psd;
-    }
-
-    public void restoreState(object state)
-    {
-        rb = GetComponent<Rigidbody>();
-        PlayerSaveData psd = (PlayerSaveData)state;
-
-        rb.position = new Vector3(psd.position[0], psd.position[1], psd.position[2]);
-        rb.rotation = new Quaternion(psd.rotation[0], psd.rotation[1], psd.rotation[2], psd.rotation[3]);
-        rb.velocity = new Vector3(psd.velocity[0], psd.velocity[1], psd.velocity[2]);
-    }
-}
-
-[System.Serializable]
-public class PlayerSaveData
-{
-    public float[] position;
-    public float[] rotation;
-    public float[] velocity;
-    //public List<object> inventory;
 }

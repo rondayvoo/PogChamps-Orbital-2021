@@ -3,18 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour, ISaveable
+public class WeaponManager : MonoBehaviour
 {
-    public List<GameObject> playerInventory;
     public int playerHeldWeapon;
-    public int maxInventorySize;
     int qWeapon = 0;
     IWeapon currWeapon;
     float currFireDelay;
     public float reachDist;
     public LayerMask gunLayer;
+    public Transform levelGenerator;
 
-    void wSelect()
+    public void wSelect()
     {
         int iter = 0;
         foreach (Transform weapon in transform)
@@ -48,6 +47,7 @@ public class WeaponManager : MonoBehaviour, ISaveable
                     wDrop();
                     facing.transform.SetParent(transform);
                     facing.transform.SetSiblingIndex(playerHeldWeapon);
+                    facing.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
                     facing.rigidbody.detectCollisions = false;
                     facing.rigidbody.isKinematic = true;
                     facing.transform.GetComponent<BaseWeaponScript>().inInventory = true;
@@ -60,6 +60,7 @@ public class WeaponManager : MonoBehaviour, ISaveable
                     //playerInventory.Add(facing.transform.gameObject.GetComponent<WeaponObject>().weaponInst);
 
                     facing.transform.SetParent(transform);
+                    facing.rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
                     facing.rigidbody.detectCollisions = false;
                     facing.rigidbody.isKinematic = true;
                     facing.transform.GetComponent<BaseWeaponScript>().inInventory = true;
@@ -91,9 +92,10 @@ public class WeaponManager : MonoBehaviour, ISaveable
             if (transform.childCount > 0 && iter == playerHeldWeapon)
             {
                 weapon.position = weapon.position + transform.forward * 2f;
-                weapon.parent = null;
+                weapon.parent = levelGenerator;
                 weapon.GetComponent<Rigidbody>().detectCollisions = true;
                 weapon.GetComponent<Rigidbody>().isKinematic = false;
+                weapon.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
                 weapon.GetComponent<BaseWeaponScript>().inInventory = false;
                 weapon.GetComponent<Rigidbody>().velocity = Camera.main.transform.up * 5f;
                 return;
@@ -132,15 +134,12 @@ public class WeaponManager : MonoBehaviour, ISaveable
     // Start is called before the first frame update
     void Start()
     {
-        GameEvents.instance.OnStageClear += weaponTransfer;
-
-        if (GameEvents.instance.stringventory != null)
-            GameEvents.instance.LoadInventory(transform, GameEvents.instance.stringventory, GameEvents.instance.ammoCountCO);
+        //levelGenerator = GameObject.FindGameObjectWithTag("Respawn").transform;
 
         foreach (Transform weaponT in transform)
         {
-            //playerInventory.Add(weaponT.attachedGameObject);
             weaponT.GetComponent<BaseWeaponScript>().inInventory = true;
+            weaponT.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
             weaponT.GetComponent<Rigidbody>().isKinematic = true;
             weaponT.GetComponent<Rigidbody>().detectCollisions = false;
             weaponT.transform.parent = transform;
@@ -151,13 +150,13 @@ public class WeaponManager : MonoBehaviour, ISaveable
 
     void OnDestroy()
     {
-        GameEvents.instance.OnStageClear -= weaponTransfer;
+        //GameEvents.instance.OnStageClear -= weaponTransfer;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!MenuManager.gamePaused)
+        if (GameEvents.instance.allowedToShoot)
         {
             if (Input.GetAxis("Mouse ScrollWheel") < 0f)
             {
@@ -203,47 +202,14 @@ public class WeaponManager : MonoBehaviour, ISaveable
                 playerHeldWeapon = qWeapon;
                 qWeapon = temp;
             }
-            
+
             wSwap();
+            primaryFireFunction();
         }
 
         wSelect();
         wSway();
-        
-        primaryFireFunction();
+
         currFireDelay = currFireDelay <= 0f ? 0f : currFireDelay - Time.deltaTime;
     }
-
-    public void weaponTransfer(object sender, EventArgs ev)
-    {
-        GameEvents.instance.SaveInventory(transform);
-    }
-
-    public object captureState()
-    {
-        WeaponTransformSave wts = new WeaponTransformSave();
-        wts.invState = GameEvents.instance.SaveInventory(transform);
-        wts.currHeldWeapon = playerHeldWeapon;
-        wts.ammoCount = new List<int>();
-
-        foreach (Transform weapon in transform)
-            wts.ammoCount.Add(weapon.GetComponent<BaseWeaponScript>().currAmmo);
-
-        return wts;
-    }
-
-    public void restoreState(object state)
-    {
-        WeaponTransformSave wts = (WeaponTransformSave) state;
-        GameEvents.instance.LoadInventory(transform, wts.invState, wts.ammoCount);
-        playerHeldWeapon = wts.currHeldWeapon;
-    }
-}
-
-[System.Serializable]
-public class WeaponTransformSave
-{
-    public int currHeldWeapon;
-    public List<string> invState;
-    public List<int> ammoCount;
 }

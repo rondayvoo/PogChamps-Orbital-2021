@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMaxHealth: 500
+  enemyExperience: 50
   enemySpeed: 2.5
   stunTime: 0.1
   lookRadius: 20
@@ -145,6 +146,7 @@ MonoBehaviour:
   meleeDamage: 80
   attackRange: 3
   attackSpeed: 1
+  animator: {fileID: 0}
 --- !u!195 &3606690632796128128
 NavMeshAgent:
   m_ObjectHideFlags: 0
